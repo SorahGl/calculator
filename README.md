@@ -1,7 +1,7 @@
-### Calculator Project
+# Calculator Project
 
 ## Technologies Used
-# HTML, CSS, JavaScript
+### HTML, CSS, JavaScript
 
 This simple calculator is fully functional and interactive.
 It is an imitation of the ios calculator.
