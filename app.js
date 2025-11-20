@@ -1,17 +1,17 @@
 let userInput = '0';
-let storedInput = '';
-let result = 0;
+let storedInput = '0';
+let result = '';
 let operator = '';
-let screenResult = false;
 const display = document.getElementById('input');
 const buttonArr = document.querySelectorAll('button');
 display.innerHTML = userInput;
 
 clearFunc = () => {
-    userInput = '';
-    result = 0;
-    display.innerHTML = 0;
-    screenResult = false;
+    userInput = '0';
+    storedInput = '0';
+    result = '';
+    operator = '';
+    display.innerHTML = userInput;
 };
 
 backspaceFunc = () => {
@@ -24,56 +24,53 @@ backspaceFunc = () => {
     }
 };
 
-equalFunc = () => {
+calculationFunc = () => {
+    let currentResult = '';
     switch (operator) {
         case '+':
-            result = parseInt(storedInput) + parseInt(userInput);
+            currentResult = parseFloat(storedInput) + parseFloat(userInput);
             break;
         case '-':
-            result = parseInt(storedInput) - parseInt(userInput);
+            currentResult = parseFloat(storedInput) - parseFloat(userInput);
             break;
         case '*':
-            result = parseInt(storedInput) * parseInt(userInput);
+            currentResult = parseFloat(storedInput) * parseFloat(userInput);
             break;
         case '/':
-            result = parseInt(storedInput) / parseInt(userInput);
+            currentResult = parseFloat(storedInput) / parseFloat(userInput);
             break;
     }
-    display.innerHTML = result;
-    userInput = result;
-    storedInput = '';
-    result = 0;
-    operator = '';
-    screenResult = true;
+    return currentResult;
 };
 
 operatorFunc = (value) => {
-    operator = value.innerHTML;
-    storedInput = userInput;
-    userInput = '';
-    screenResult = false;
-    console.log(storedInput);
+   if (storedInput == '0') {
+       storedInput = userInput;
+   }
+   else if (result) {
+        storedInput = result
+        result = '';
+   }
+   else {
+        storedInput = calculationFunc();
+   }
+   operator = value.innerHTML;
+   userInput = ''
 };
+
+equalFunc = () => {
+    storedInput = calculationFunc();
+    result = storedInput;
+    display.innerHTML = result;
+    userInput = '';
+}
 
 numberFunc = (value) => {
-    if (screenResult) {
-        console.log('srtbrsb');
-        userInput = value.innerHTML;
-        display.innerHTML = userInput;
-        screenResult = false;
-    } else {
-        
-        if (userInput === '0') {
-            userInput = '';
-        }
-        userInput += value.innerHTML;
-        display.innerHTML = userInput;
-    }
+    if (result != '') clearFunc() // clear everything first to start the calculation anew
+    if (userInput == '0') userInput = value.innerHTML; // to remove the leading zero
+    else userInput += value.innerHTML;
+    display.innerHTML = userInput;
 };
-
-   
-
-
 
 const calc = (value) => {
     if (value.id === 'clear') {
